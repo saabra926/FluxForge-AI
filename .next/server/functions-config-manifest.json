@@ -1,0 +1,1 @@
+{"version":1,"functions":{"/api/deploy/trigger":{"maxDuration":60},"/api/backend-gen":{"maxDuration":120},"/api/refine":{"maxDuration":120},"/api/seo-analyze":{"maxDuration":180},"/api/generate":{"maxDuration":300},"/guide":{}}}

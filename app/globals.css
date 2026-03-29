@@ -1,0 +1,891 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design tokens: dark (default) ───────────────────────────── */
+:root,
+[data-theme="dark"] {
+  --bg: #06080f;
+  --bg2: #0b0f1a;
+  --bg3: #0f1525;
+  --panel: #0c1120;
+  --code-bg: #070b14;
+  --border: rgba(59, 130, 246, 0.1);
+  --border2: rgba(59, 130, 246, 0.2);
+  --border3: rgba(59, 130, 246, 0.35);
+  --blue: #3b82f6;
+  --violet: #8b5cf6;
+  --purple: #8b5cf6;
+  --teal: #06d6a0;
+  --pink: #ec4899;
+  --amber: #f59e0b;
+  --green: #10b981;
+  --green-dim: rgba(16, 185, 129, 0.12);
+  --red: #f43f5e;
+  --text: #e2e8f8;
+  --text2: #7c8ba3;
+  --text3: #5c6b83;
+  --blue-dim: rgba(59, 130, 246, 0.14);
+  --glow-blue: rgba(59, 130, 246, 0.22);
+  --glow-purple: rgba(139, 92, 246, 0.18);
+  --glow-teal: rgba(6, 214, 160, 0.18);
+  --success: #06d6a0;
+  --error: #f43f5e;
+  --warn: #f59e0b;
+  --primary-rgb: 59 130 246;
+  --secondary-rgb: 139 92 246;
+  --text-base-size: 15px;
+  --radius-ui: 12px;
+  --font-heading-family: var(--font-syne), system-ui, sans-serif;
+  --density-nav-pad: 0.625rem;
+  --density-nav-gap: 0.25rem;
+  --density-section-gap: 1.25rem;
+  --density-card-pad: 1rem;
+  --btn-pad-x: 0.875rem;
+  --btn-pad-y: 0.5rem;
+  --btn-font: 0.75rem;
+}
+
+[data-theme="dark"][data-surface-preset="cool"] {
+  --bg: #050a14;
+  --bg2: #0a1220;
+  --bg3: #0c1628;
+  --panel: #0a1424;
+}
+
+[data-theme="dark"][data-surface-preset="warm"] {
+  --bg: #0c0908;
+  --bg2: #14100e;
+  --bg3: #1a1512;
+  --panel: #120f0d;
+}
+
+[data-theme="dark"][data-surface-preset="neutral"] {
+  --bg: #0a0a0b;
+  --bg2: #121214;
+  --bg3: #18181b;
+  --panel: #0f0f10;
+}
+
+/* ── Light theme ─────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --bg2: #f1f5f9;
+  --bg3: #e2e8f0;
+  --panel: #ffffff;
+  --code-bg: #f1f5f9;
+  --border: rgba(15, 23, 42, 0.08);
+  --border2: rgba(15, 23, 42, 0.12);
+  --border3: rgba(15, 23, 42, 0.18);
+  --text: #0f172a;
+  --text2: #475569;
+  --text3: #64748b;
+  --green-dim: rgba(16, 185, 129, 0.15);
+  --card-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="light"][data-surface-preset="cool"] {
+  --bg: #f0f9ff;
+  --bg2: #e0f2fe;
+  --bg3: #f8fafc;
+  --panel: #ffffff;
+}
+
+[data-theme="light"][data-surface-preset="warm"] {
+  --bg: #fffbeb;
+  --bg2: #fef3c7;
+  --bg3: #fffbeb;
+  --panel: #ffffff;
+}
+
+[data-theme="light"][data-surface-preset="neutral"] {
+  --bg: #fafafa;
+  --bg2: #f4f4f5;
+  --bg3: #e4e4e7;
+  --panel: #ffffff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--text-base-size);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-dm-sans, "DM Sans"), system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 768px) {
+  body {
+    overflow: hidden;
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--primary-rgb, 59 130 246) / 0.22) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--primary-rgb, 59 130 246) / 0.22);
+  border-radius: 99px;
+}
+
+.grid-bg {
+  background-image: linear-gradient(rgba(var(--primary-rgb, 59 130 246) / 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--primary-rgb, 59 130 246) / 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+[data-theme="light"] .grid-bg {
+  background-image: linear-gradient(rgba(var(--primary-rgb, 59 130 246) / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--primary-rgb, 59 130 246) / 0.06) 1px, transparent 1px);
+}
+
+.glass {
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+}
+
+[data-theme="dark"] .glass {
+  background: rgba(12, 17, 32, 0.72);
+}
+
+.glass-strong {
+  background: color-mix(in srgb, var(--panel) 82%, transparent);
+  backdrop-filter: blur(22px) saturate(1.45);
+  -webkit-backdrop-filter: blur(22px) saturate(1.45);
+}
+
+[data-theme="dark"] .glass-strong {
+  background: rgba(12, 17, 32, 0.82);
+}
+
+[data-theme="light"] .glass-strong {
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.font-syne,
+.font-heading {
+  font-family: var(--font-heading-family);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.appearance-tool-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text3);
+}
+
+.ui-btn-secondary {
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  font-size: var(--btn-font);
+  border-radius: var(--radius-ui);
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text2);
+  font-weight: 600;
+  transition: opacity 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.ui-btn-secondary:hover {
+  background: var(--bg2);
+  border-color: var(--border3);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--primary-rgb, 59 130 246) / 0.2);
+  }
+  50% {
+    box-shadow: 0 0 18px 5px rgba(var(--primary-rgb, 59 130 246) / 0.35);
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes stepIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.35s ease both;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glowPulse {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2.2s linear infinite;
+}
+
+.animate-stepIn {
+  animation: stepIn 0.4s ease both;
+}
+
+.animate-spin-custom {
+  animation: spin 1.2s linear infinite;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(var(--primary-rgb, 59 130 246) / 0.06) 25%,
+    rgba(var(--primary-rgb, 59 130 246) / 0.12) 50%,
+    rgba(var(--primary-rgb, 59 130 246) / 0.06) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+  border-radius: var(--radius-ui);
+}
+
+.code-block {
+  font-family: var(--font-jetbrains, "JetBrains Mono"), monospace;
+  font-size: 0.8125rem;
+  line-height: 1.75;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.input-ring {
+  border: 1px solid var(--border2);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.input-ring:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb, 59 130 246) / 0.14);
+}
+
+.btn-primary {
+  border-radius: var(--radius-ui);
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  font-size: var(--btn-font);
+  background: linear-gradient(135deg, var(--blue) 0%, var(--violet) 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 20px var(--glow-blue);
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  font-weight: 600;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 28px var(--glow-blue);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.tab-active {
+  border-radius: var(--radius-ui);
+}
+
+/* Mobile drawer safe area */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .safe-pb {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* ── Full-screen atmosphere (fixed layer; compositor-friendly) ───────── */
+.app-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.app-backdrop::before,
+.app-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.app-backdrop-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 88% 72% at 50% 42%, transparent 32%, rgba(0, 0, 0, 0.28) 100%);
+  mix-blend-mode: multiply;
+}
+
+[data-theme="light"] .app-backdrop-vignette {
+  mix-blend-mode: multiply;
+  background: radial-gradient(ellipse 92% 78% at 50% 38%, transparent 40%, rgba(15, 23, 42, 0.07) 100%);
+}
+
+@keyframes backdropPan {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-2%, 1%, 0) scale(1.03);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes backdropDrift {
+  to {
+    transform: translate3d(0, -120px, 0);
+  }
+}
+
+@keyframes backdropRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes backdropPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes gridDrift {
+  0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+  100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+}
+
+@keyframes float3D {
+  0%, 100% { transform: translate3d(0, 0, 0) rotateX(0) rotateY(0); }
+  25% { transform: translate3d(10px, -15px, 20px) rotateX(5deg) rotateY(5deg); }
+  50% { transform: translate3d(-5px, 10px, -10px) rotateX(-5deg) rotateY(-8deg); }
+  75% { transform: translate3d(-12px, -8px, 15px) rotateX(8deg) rotateY(3deg); }
+}
+
+@keyframes neuralFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes warpSpeed {
+  0% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+  50% { transform: scale(1.5) rotate(180deg); opacity: 0.6; }
+  100% { transform: scale(1) rotate(360deg); opacity: 0.3; }
+}
+
+@keyframes circuitPulse {
+  0%, 100% { opacity: 0.4; filter: brightness(1); }
+  50% { opacity: 0.8; filter: brightness(1.5); }
+}
+
+/* ── 3D Wallpapers ─────────────────────────────────────────── */
+
+/* Cyber Mesh */
+html[data-backdrop="cyberMesh"] .app-backdrop {
+  background: #02040a;
+}
+html[data-backdrop="cyberMesh"] .app-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: -100%;
+  background-image: 
+    linear-gradient(rgba(59, 130, 246, 0.2) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.2) 1.5px, transparent 1.5px);
+  background-size: 60px 60px;
+  transform: perspective(1000px) rotateX(65deg) translateZ(0);
+  animation: gridDrift 3s linear infinite;
+}
+html[data-backdrop="cyberMesh"] .app-backdrop::after {
+  background: radial-gradient(circle at 50% 40%, transparent 10%, #02040a 75%);
+}
+
+/* Cosmic Nebula */
+html[data-backdrop="cosmicNebula"] .app-backdrop {
+  background: radial-gradient(circle at 20% 30%, #0f172a 0%, #020617 100%);
+}
+html[data-backdrop="cosmicNebula"] .app-backdrop::before {
+  background: 
+    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 10% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
+  filter: blur(100px);
+  width: 200%;
+  height: 200%;
+  left: -50%;
+  top: -50%;
+  animation: float3D 25s ease-in-out infinite;
+}
+
+/* Glass Geometry */
+html[data-backdrop="glassGeometry"] .app-backdrop {
+  background: #06080f;
+}
+html[data-backdrop="glassGeometry"] .app-backdrop::before {
+  content: "FLUXFORGE";
+  font-family: var(--font-syne);
+  font-weight: 900;
+  font-size: 15vw;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+  -webkit-background-clip: text;
+  color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 30px rgba(59,130,246,0.1));
+  animation: float3D 18s ease-in-out infinite;
+}
+
+/* Neural Flow */
+html[data-backdrop="neuralFlow"] .app-backdrop {
+  background: #02040a;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+}
+html[data-backdrop="neuralFlow"] .app-backdrop::before {
+  background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+  opacity: 0.1;
+}
+html[data-backdrop="neuralFlow"] .app-backdrop::after {
+  background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+  animation: neuralFlow 10s ease infinite;
+  background-size: 200% 200%;
+}
+
+/* Cyber Circuit */
+html[data-backdrop="cyberCircuit"] .app-backdrop {
+  background: #05070a;
+}
+html[data-backdrop="cyberCircuit"] .app-backdrop::before {
+  background-image: 
+    linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+  background-size: 100px 100px;
+  transform: perspective(800px) rotateX(45deg);
+  animation: circuitPulse 4s ease-in-out infinite;
+}
+
+/* Warp Tunnel */
+html[data-backdrop="warpTunnel"] .app-backdrop {
+  background: #000;
+}
+html[data-backdrop="warpTunnel"] .app-backdrop::before {
+  background: conic-gradient(from 0deg at 50% 50%, transparent, rgba(59, 130, 246, 0.2), transparent);
+  animation: warpSpeed 3s linear infinite;
+}
+html[data-backdrop="warpTunnel"] .app-backdrop::after {
+  background: radial-gradient(circle at 50% 50%, black 20%, transparent 100%);
+}
+
+/* Classic */
+html[data-backdrop="classic"] .app-backdrop::before {
+  background-image: linear-gradient(rgba(var(--primary-rgb, 59 130 246) / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--primary-rgb, 59 130 246) / 0.06) 1px, transparent 1px);
+  background-size: 52px 52px;
+  opacity: 0.9;
+  animation: backdropPan 28s ease-in-out infinite;
+}
+
+html[data-backdrop="classic"] .app-backdrop::after {
+  background: radial-gradient(ellipse 68% 52% at 18% 12%, rgba(var(--primary-rgb, 59 130 246) / 0.11), transparent 58%),
+    radial-gradient(ellipse 54% 48% at 88% 18%, rgba(var(--secondary-rgb, 139 92 246) / 0.09), transparent 55%);
+}
+
+/* Frosted planes */
+html[data-backdrop="frosted"] .app-backdrop::before {
+  background: radial-gradient(ellipse 70% 55% at 20% 75%, rgba(var(--primary-rgb, 59 130 246) / 0.12), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 78% 22%, rgba(var(--secondary-rgb, 139 92 246) / 0.1), transparent 58%);
+  filter: saturate(1.08);
+  animation: backdropPan 32s ease-in-out infinite;
+}
+
+html[data-backdrop="frosted"] .app-backdrop::after {
+  background: linear-gradient(125deg, transparent 36%, rgba(255, 255, 255, 0.04) 48%, transparent 60%);
+  animation: backdropDrift 40s linear infinite;
+  height: 150%;
+  top: -25%;
+}
+
+/* Aurora */
+html[data-backdrop="aurora"] .app-backdrop::before {
+  background: linear-gradient(
+    118deg,
+    rgba(var(--primary-rgb, 59 130 246) / 0.12) 0%,
+    transparent 32%,
+    rgba(var(--secondary-rgb, 139 92 246) / 0.11) 52%,
+    transparent 72%,
+    rgba(6, 214, 160, 0.08) 100%
+  );
+  animation: backdropPan 22s ease-in-out infinite reverse;
+}
+
+html[data-backdrop="aurora"] .app-backdrop::after {
+  background: radial-gradient(ellipse 80% 45% at 50% 108%, rgba(var(--primary-rgb, 59 130 246) / 0.18), transparent 62%);
+  animation: backdropPulse 10s ease-in-out infinite;
+}
+
+/* 3D horizon grid */
+html[data-backdrop="depth3d"] .app-backdrop {
+  perspective: 560px;
+}
+
+html[data-backdrop="depth3d"] .app-backdrop::before {
+  background: linear-gradient(
+        90deg,
+        rgba(var(--primary-rgb, 59 130 246) / 0.08) 0.5px,
+        transparent 0.5px
+      )
+      0 0 / 56px 100%,
+    linear-gradient(rgba(var(--primary-rgb, 59 130 246) / 0.06) 0.5px, transparent 0.5px) 0 0 / 100% 48px;
+  transform-origin: 50% 100%;
+  transform: rotateX(62deg) scaleY(1.8) translateY(18%);
+  opacity: 0.65;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 35%, #000 88%, transparent 100%);
+  animation: backdropDrift 36s linear infinite;
+}
+
+html[data-backdrop="depth3d"] .app-backdrop::after {
+  background: radial-gradient(ellipse 90% 55% at 50% -8%, rgba(var(--secondary-rgb, 139 92 246) / 0.12), transparent 58%);
+}
+
+/* Neon prism beams */
+html[data-backdrop="neonPrism"] .app-backdrop::before {
+  background: repeating-linear-gradient(
+    -28deg,
+    transparent 0,
+    transparent 62px,
+    rgba(var(--secondary-rgb, 139 92 246) / 0.06) 62px,
+    rgba(var(--secondary-rgb, 139 92 246) / 0.06) 63px
+  );
+  animation: backdropDrift 30s linear infinite;
+}
+
+html[data-backdrop="neonPrism"] .app-backdrop::after {
+  background: linear-gradient(
+    210deg,
+    rgba(var(--primary-rgb, 59 130 246) / 0.12) 0%,
+    transparent 40%,
+    rgba(236, 72, 153, 0.08) 100%
+  );
+}
+
+/* Void lux — soft star haze */
+html[data-backdrop="voidLux"] .app-backdrop::before {
+  background-image: radial-gradient(1.5px 1.5px at 10% 22%, rgba(255, 255, 255, 0.22), transparent),
+    radial-gradient(1px 1px at 73% 41%, rgba(255, 255, 255, 0.15), transparent),
+    radial-gradient(1.2px 1.2px at 45% 78%, rgba(255, 255, 255, 0.18), transparent),
+    radial-gradient(1.8px 1.8px at 88% 64%, rgba(255, 255, 255, 0.12), transparent);
+  background-size: 420px 420px;
+  animation: backdropPan 48s linear infinite;
+  opacity: 0.7;
+}
+
+html[data-backdrop="voidLux"] .app-backdrop::after {
+  background: radial-gradient(ellipse 66% 50% at 50% 18%, rgba(var(--primary-rgb, 59 130 246) / 0.09), transparent 62%);
+}
+
+/* 3D stone (layered “relief”, CSS only) */
+html[data-backdrop="stone3d"] .app-backdrop::before {
+  background: repeating-linear-gradient(
+    -18deg,
+    rgba(255, 255, 255, 0.03) 0,
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 1px,
+    transparent 46px
+  );
+  animation: backdropDrift 24s linear infinite;
+  opacity: 0.55;
+}
+
+html[data-backdrop="stone3d"] .app-backdrop::after {
+  background: radial-gradient(ellipse 88% 60% at 50% 115%, rgba(85, 90, 100, 0.35), transparent 56%),
+    radial-gradient(ellipse 55% 42% at 14% 12%, rgba(255, 255, 255, 0.05), transparent 62%);
+}
+
+/* Obsidian flow */
+html[data-backdrop="obsidianFlow"] .app-backdrop::before {
+  background: conic-gradient(from 200deg at 50% 120%, rgba(20, 25, 40, 0.95), rgba(var(--secondary-rgb, 139 92 246) / 0.15), rgba(10, 12, 22, 0.98), rgba(var(--primary-rgb, 59 130 246) / 0.12), rgba(20, 25, 40, 0.95));
+  animation: backdropRotate 120s linear infinite;
+  transform-origin: 50% 65%;
+  opacity: 0.45;
+}
+
+html[data-backdrop="obsidianFlow"] .app-backdrop::after {
+  background: linear-gradient(185deg, transparent 28%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+/* Black marble waves */
+html[data-backdrop="blackMarbleWaves"] .app-backdrop::before {
+  background: repeating-radial-gradient(circle at 40% 110%, rgba(255, 255, 255, 0.035) 0 2px, transparent 2px 68px);
+  animation: backdropPan 26s ease-in-out infinite;
+}
+
+html[data-backdrop="blackMarbleWaves"] .app-backdrop::after {
+  background: linear-gradient(
+    105deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    transparent 38%,
+    rgba(255, 255, 255, 0.03) 52%,
+    transparent 72%
+  );
+  animation: backdropDrift 35s linear infinite reverse;
+}
+
+/* Eclipse core */
+html[data-backdrop="eclipseCore"] .app-backdrop::before {
+  background: radial-gradient(circle at 50% 46%, transparent 28%, rgba(var(--primary-rgb, 59 130 246) / 0.2) 40%, transparent 52%),
+    radial-gradient(circle at 50% 46%, rgba(255, 140, 60, 0.08) 0%, transparent 36%);
+  animation: backdropPulse 14s ease-in-out infinite;
+}
+
+html[data-backdrop="eclipseCore"] .app-backdrop::after {
+  background: radial-gradient(ellipse 120% 80% at 50% 122%, rgba(0, 0, 0, 0.55), transparent 58%);
+}
+
+/* Abyssal fracture */
+html[data-backdrop="abyssalFracture"] .app-backdrop::before {
+  background: linear-gradient(96deg, transparent 44%, rgba(var(--primary-rgb, 59 130 246) / 0.12) 49.5%, transparent 55%),
+    linear-gradient(-88deg, transparent 58%, rgba(var(--secondary-rgb, 139 92 246) / 0.1) 63%, transparent 68%);
+  background-size: 100% 100%, 100% 100%;
+  animation: backdropPan 18s ease-in-out infinite;
+}
+
+html[data-backdrop="abyssalFracture"] .app-backdrop::after {
+  background-image: repeating-linear-gradient(
+    -72deg,
+    transparent 0,
+    transparent 68px,
+    rgba(255, 255, 255, 0.025) 68px,
+    rgba(255, 255, 255, 0.025) 69px
+  );
+}
+
+/* Shadow terrain */
+html[data-backdrop="shadowTerrain"] .app-backdrop::before {
+  background: linear-gradient(180deg, rgba(10, 12, 18, 0.2) 0%, transparent 42%),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.22) 0, rgba(0, 0, 0, 0.22) 1px, transparent 1px, transparent 48px);
+  mask-image: linear-gradient(180deg, #000 45%, transparent 100%);
+  animation: backdropDrift 42s linear infinite;
+}
+
+html[data-backdrop="shadowTerrain"] .app-backdrop::after {
+  background: radial-gradient(ellipse 70% 46% at 24% 8%, rgba(var(--secondary-rgb, 139 92 246) / 0.08), transparent 60%);
+}
+
+/* Neon phantom */
+html[data-backdrop="neonPhantom"] .app-backdrop::before {
+  background: radial-gradient(ellipse 54% 38% at 12% 20%, rgba(236, 72, 153, 0.14), transparent 62%),
+    radial-gradient(ellipse 50% 40% at 86% 28%, rgba(34, 211, 238, 0.11), transparent 60%);
+  animation: backdropPan 20s ease-in-out infinite;
+}
+
+html[data-backdrop="neonPhantom"] .app-backdrop::after {
+  background: repeating-linear-gradient(
+    135deg,
+    transparent 0,
+    transparent 80px,
+    rgba(34, 211, 238, 0.04) 80px,
+    rgba(34, 211, 238, 0.04) 81px
+  );
+}
+
+/* Dark energy dragon — coiling gradient ribbons */
+html[data-backdrop="darkEnergyDragon"] .app-backdrop::before {
+  background: conic-gradient(
+    from 45deg at 60% 40%,
+    rgba(var(--primary-rgb, 59 130 246) / 0.12),
+    transparent 22%,
+    rgba(var(--secondary-rgb, 139 92 246) / 0.14),
+    transparent 48%,
+    rgba(220, 38, 38, 0.08),
+    transparent 72%,
+    rgba(var(--primary-rgb, 59 130 246) / 0.12)
+  );
+  animation: backdropRotate 90s linear infinite;
+  opacity: 0.42;
+}
+
+html[data-backdrop="darkEnergyDragon"] .app-backdrop::after {
+  background: radial-gradient(ellipse 88% 55% at 50% 110%, rgba(0, 0, 0, 0.5), transparent 55%);
+}
+
+/* Abyss walker — deep trench sweep */
+html[data-backdrop="abyssWalker"] .app-backdrop::before {
+  background: linear-gradient(92deg, rgba(0, 0, 0, 0) 40%, rgba(var(--primary-rgb, 59 130 246) / 0.06) 50%, rgba(0, 0, 0, 0) 60%);
+  background-size: 180% 100%;
+  animation: backdropDrift 25s linear infinite;
+}
+
+html[data-backdrop="abyssWalker"] .app-backdrop::after {
+  background: radial-gradient(ellipse 76% 52% at 50% -5%, rgba(30, 58, 138, 0.22), transparent 58%),
+    radial-gradient(ellipse 90% 58% at 50% 118%, rgba(0, 0, 0, 0.55), transparent 52%);
+}
+
+/* ── Neon theme packs (accent glow; pairs with color presets) ─────────── */
+[data-neon]:not([data-neon="off"]) {
+  --neon-ring: rgba(var(--primary-rgb, 59 130 246) / 0.45);
+  --neon-outer: rgba(var(--secondary-rgb, 139 92 246) / 0.28);
+}
+
+[data-neon]:not([data-neon="off"]) .glass-strong,
+[data-neon]:not([data-neon="off"]) .glass {
+  box-shadow: 0 0 0 1px var(--neon-ring), 0 0 28px var(--neon-outer);
+}
+
+[data-neon]:not([data-neon="off"]) .btn-primary {
+  box-shadow: 0 0 0 1px var(--neon-ring), 0 6px 32px var(--neon-outer), 0 4px 20px var(--glow-blue);
+}
+
+html[data-neon="electricOrchid"] {
+  --neon-ring: rgba(192, 132, 252, 0.55);
+  --neon-outer: rgba(236, 72, 153, 0.22);
+}
+
+html[data-neon="tokyoVoltage"] {
+  --neon-ring: rgba(34, 211, 238, 0.55);
+  --neon-outer: rgba(244, 114, 182, 0.26);
+}
+
+html[data-neon="miamiInferno"] {
+  --neon-ring: rgba(251, 113, 133, 0.55);
+  --neon-outer: rgba(251, 191, 36, 0.3);
+}
+
+html[data-neon="toxicLagoon"] {
+  --neon-ring: rgba(74, 222, 128, 0.5);
+  --neon-outer: rgba(16, 185, 129, 0.24);
+}
+
+html[data-neon="royalPlasma"] {
+  --neon-ring: rgba(250, 204, 21, 0.45);
+  --neon-outer: rgba(59, 130, 246, 0.28);
+}
+
+html[data-neon="bloodCircuit"] {
+  --neon-ring: rgba(248, 113, 113, 0.55);
+  --neon-outer: rgba(185, 28, 28, 0.25);
+}
+
+html[data-neon="frostWire"] {
+  --neon-ring: rgba(125, 211, 252, 0.5);
+  --neon-outer: rgba(226, 232, 240, 0.18);
+}
+
+html[data-neon="solarNitro"] {
+  --neon-ring: rgba(251, 146, 60, 0.55);
+  --neon-outer: rgba(253, 224, 71, 0.28);
+}
+
+html[data-neon="voidRose"] {
+  --neon-ring: rgba(244, 114, 182, 0.42);
+  --neon-outer: rgba(109, 40, 217, 0.24);
+}
+
+html[data-neon="chromeRush"] {
+  --neon-ring: rgba(226, 232, 240, 0.38);
+  --neon-outer: rgba(59, 130, 246, 0.32);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-backdrop::before,
+  .app-backdrop::after {
+    animation: none !important;
+  }
+}
